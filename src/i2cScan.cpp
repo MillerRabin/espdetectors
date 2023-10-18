@@ -1,11 +1,11 @@
 #include <i2cScan.h>
 
-void i2c_scan() {    
+void i2c_scan(TwoWire *wire) {    
   Serial.println("Scanning...");
   int nDevices = 0;
   for(byte address = 1; address < 127; address++ ) {
-    Wire.beginTransmission(address);
-    byte error = Wire.endTransmission();
+    wire->beginTransmission(address);
+    byte error = wire->endTransmission();
     if (error == 0) {
       Serial.print("I2C device found at address 0x");
       if (address<16) {

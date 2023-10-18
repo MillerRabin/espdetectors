@@ -7,7 +7,7 @@
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 
-bool bme280_setup(byte address);
-void bme280_print();
+Adafruit_BME280* bme280_setup(byte address, TwoWire* wire);
+void bme280_print(Adafruit_BME280* bme);
 
 #endif
