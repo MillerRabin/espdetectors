@@ -50,7 +50,7 @@ void mpu9250_setup() {
    *  using the +/- 250 degrees/s range. 
    *  Use either autoOffset or setGyrOffsets, not both.
    */
-  myMPU9250.setGyrOffsets(45.0, 145.0, -105.0);
+  //myMPU9250.setGyrOffsets(45.0, 145.0, -105.0);
 
   /*  You can enable or disable the digital low pass filter (DLPF). If you disable the DLPF, you 
    *  need to select the bandwdith, which can be either 8800 or 3600 Hz. 8800 Hz has a shorter delay,
@@ -146,7 +146,8 @@ void mpu9250_print() {
   xyzFloat gyr = myMPU9250.getGyrValues();
   xyzFloat magValue = myMPU9250.getMagValues();
   float temp = myMPU9250.getTemperature();
-  float resultantG = myMPU9250.getResultantG(gValue);
+  float resultantG = myMPU9250.getResultantG(gValue);  
+  xyzFloat angle = myMPU9250.getAngles();
 
   Serial.println("Acceleration in g (x,y,z):");
   Serial.print(gValue.x);
@@ -164,6 +165,18 @@ void mpu9250_print() {
   Serial.print("   ");
   Serial.println(gyr.z);
 
+  /* Angles are also based on the corrected raws. Angles are simply calculated by
+   angle = arcsin(g Value) */
+  Serial.print("Angle x  = ");
+  Serial.print(angle.x);
+  Serial.print("  |  Angle y  = ");
+  Serial.print(angle.y);
+  Serial.print("  |  Angle z  = ");
+  Serial.println(angle.z);
+
+  Serial.print("Orientation of the module: ");
+  Serial.println(myMPU9250.getOrientationAsString());
+
   Serial.println("Magnetometer Data in µTesla: ");
   Serial.print(magValue.x);
   Serial.print("   ");
@@ -173,6 +186,8 @@ void mpu9250_print() {
 
   Serial.print("Temperature in °C: ");
   Serial.println(temp);
+  
+  Serial.println();
 
   Serial.println("********************************************");  
 }
